@@ -31,14 +31,11 @@ spec:
             - name: dashboard-node-exporter
               mountPath: /etc/grafana/dashboards
             - name: dashboard-argocd
-              mountPath: /etc/grafana/dashboards/argocd.json
-              subPath: argocd.json
+              mountPath: /etc/grafana/dashboards/argocd
             - name: dashboard-cluster-resources
-              mountPath: /etc/grafana/dashboards/cluster-resources.json
-              subPath: cluster-resources.json
+              mountPath: /etc/grafana/dashboards/cluster-resources
             - name: dashboard-pod-resources
-              mountPath: /etc/grafana/dashboards/pod-resources.json
-              subPath: pod-resources.json
+              mountPath: /etc/grafana/dashboards/pod-resources
             - name: data
               mountPath: /var/lib/grafana
       volumes:
