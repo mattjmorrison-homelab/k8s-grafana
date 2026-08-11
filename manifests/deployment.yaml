@@ -40,6 +40,9 @@ spec:
             - name: dashboard-pod-resources
               mountPath: /etc/grafana/dashboards/pod-resources.json
               subPath: pod-resources.json
+            - name: dashboard-homelab-overview
+              mountPath: /etc/grafana/dashboards/homelab-overview.json
+              subPath: homelab-overview.json
             - name: data
               mountPath: /var/lib/grafana
       volumes:
@@ -61,6 +64,9 @@ spec:
         - name: dashboard-pod-resources
           configMap:
             name: grafana-dashboard-pod-resources
+        - name: dashboard-homelab-overview
+          configMap:
+            name: grafana-dashboard-homelab-overview
         - name: data
           persistentVolumeClaim:
             claimName: grafana-data
