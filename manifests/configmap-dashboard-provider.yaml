@@ -7,7 +7,23 @@ data:
   provider.yaml: |
     apiVersion: 1
     providers:
-      - name: default
+      - name: node-exporter
         type: file
         options:
-          path: /etc/grafana/dashboards
+          path: /etc/grafana/dashboards/node-exporter
+      - name: argocd
+        type: file
+        options:
+          path: /etc/grafana/dashboards/argocd
+      - name: cluster-resources
+        type: file
+        options:
+          path: /etc/grafana/dashboards/cluster-resources
+      - name: pod-resources
+        type: file
+        options:
+          path: /etc/grafana/dashboards/pod-resources
+      - name: homelab-overview
+        type: file
+        options:
+          path: /etc/grafana/dashboards/homelab-overview
