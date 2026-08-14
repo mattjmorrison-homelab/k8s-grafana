@@ -272,8 +272,8 @@ data:
           "fill": 3,
           "gridPos": {
             "h": 8,
-            "w": 24,
-            "x": 0,
+            "w": 16,
+            "x": 8,
             "y": 6
           },
           "id": 4,
@@ -583,162 +583,103 @@ data:
             "type": "prometheus",
             "uid": "${ds_prometheus}"
           },
-          "description": "Most recent internet download speed test result",
+          "description": "Internet download/upload speed over time (Ookla, via speedtest-exporter)",
           "fieldConfig": {
             "defaults": {
               "color": {
-                "mode": "thresholds"
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisPlacement": "auto",
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": true
               },
               "decimals": 1,
-              "mappings": [
-                {
-                  "options": {
-                    "match": "null",
-                    "result": {
-                      "text": "N/A"
-                    }
-                  },
-                  "type": "special"
-                }
-              ],
               "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
+              "unit": "bps"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Download"
+                },
+                "properties": [
                   {
-                    "color": "rgba(245, 54, 54, 0.9)"
-                  },
-                  {
-                    "color": "rgba(237, 129, 40, 0.89)",
-                    "value": 100
-                  },
-                  {
-                    "color": "rgba(50, 172, 45, 0.97)",
-                    "value": 300
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
                   }
                 ]
               },
-              "unit": "Mbits"
-            },
-            "overrides": []
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Upload"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "orange",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
             "h": 8,
-            "w": 12,
+            "w": 8,
             "x": 0,
-            "y": 22
+            "y": 6
           },
           "id": 7,
           "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
-            "reduceOptions": {
+            "legend": {
               "calcs": [
                 "lastNotNull"
               ],
-              "fields": "",
-              "values": false
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
             },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
           },
           "pluginVersion": "11.6.1",
           "targets": [
             {
               "editorMode": "code",
               "exemplar": false,
-              "expr": "speedtest_download",
-              "instant": true,
-              "legendFormat": "",
-              "range": false,
+              "expr": "speedtest_download_bits_per_second",
+              "instant": false,
+              "legendFormat": "Download",
+              "range": true,
               "refId": "A"
-            }
-          ],
-          "title": "Internet Download Speed",
-          "type": "gauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${ds_prometheus}"
-          },
-          "description": "Most recent internet upload speed test result",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 1,
-              "mappings": [
-                {
-                  "options": {
-                    "match": "null",
-                    "result": {
-                      "text": "N/A"
-                    }
-                  },
-                  "type": "special"
-                }
-              ],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "rgba(245, 54, 54, 0.9)"
-                  },
-                  {
-                    "color": "rgba(237, 129, 40, 0.89)",
-                    "value": 20
-                  },
-                  {
-                    "color": "rgba(50, 172, 45, 0.97)",
-                    "value": 50
-                  }
-                ]
-              },
-              "unit": "Mbits"
             },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 22
-          },
-          "id": 8,
-          "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
-          },
-          "pluginVersion": "11.6.1",
-          "targets": [
             {
               "editorMode": "code",
               "exemplar": false,
-              "expr": "speedtest_upload",
-              "instant": true,
-              "legendFormat": "",
-              "range": false,
-              "refId": "A"
+              "expr": "speedtest_upload_bits_per_second",
+              "instant": false,
+              "legendFormat": "Upload",
+              "range": true,
+              "refId": "B"
             }
           ],
-          "title": "Internet Upload Speed",
-          "type": "gauge"
+          "timeFrom": "24h",
+          "title": "Internet Speed",
+          "type": "timeseries"
         }
       ],
       "refresh": "30s",
