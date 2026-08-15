@@ -539,7 +539,7 @@ data:
               "expr": "count(sum by (pod)(delta(kube_pod_container_status_restarts_total[15m]) > 0))",
               "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{pod}}",
+              "legendFormat": "{{ "{{" }}pod{{ "}}" }}",
               "metric": "node_memory_MemTotal",
               "refId": "A",
               "step": 40
@@ -606,7 +606,7 @@ data:
               "expr": "sum by (pod)(delta(kube_pod_container_status_restarts_total[15m]) > 0)",
               "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{pod}}",
+              "legendFormat": "{{ "{{" }}pod{{ "}}" }}",
               "refId": "A",
               "step": 10
             }
@@ -696,7 +696,7 @@ data:
               "hide": false,
               "interval": "",
               "intervalFactor": 2,
-              "legendFormat": "{{ phase }}",
+              "legendFormat": "{{ "{{" }} phase {{ "}}" }}",
               "metric": "kube_pod_status_phase",
               "refId": "A",
               "step": 10
@@ -705,7 +705,7 @@ data:
               "expr": "kubelet_running_pod_count{kubernetes_io_role =~ \".*node.*\"}",
               "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{ instance }}",
+              "legendFormat": "{{ "{{" }} instance {{ "}}" }}",
               "refId": "B",
               "step": 10
             }
@@ -790,7 +790,7 @@ data:
               "expr": "node_load1",
               "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{instance}}",
+              "legendFormat": "{{ "{{" }}instance{{ "}}" }}",
               "metric": "node_load1",
               "refId": "A",
               "step": 10
@@ -877,7 +877,7 @@ data:
               "expr": "node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes",
               "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{instance}}",
+              "legendFormat": "{{ "{{" }}instance{{ "}}" }}",
               "metric": "node_memory_MemAvailable",
               "refId": "A",
               "step": 10
@@ -965,7 +965,7 @@ data:
               "format": "time_series",
               "interval": "",
               "intervalFactor": 2,
-              "legendFormat": "{{ instance }}",
+              "legendFormat": "{{ "{{" }} instance {{ "}}" }}",
               "refId": "A",
               "step": 10
             }
@@ -1053,7 +1053,7 @@ data:
               "format": "time_series",
               "interval": "",
               "intervalFactor": 2,
-              "legendFormat": "{{instance}}",
+              "legendFormat": "{{ "{{" }}instance{{ "}}" }}",
               "refId": "A",
               "step": 10
             }
@@ -1140,7 +1140,7 @@ data:
               "hide": false,
               "interval": "",
               "intervalFactor": 2,
-              "legendFormat": "{{instance}} {{device}}",
+              "legendFormat": "{{ "{{" }}instance{{ "}}" }} {{ "{{" }}device{{ "}}" }}",
               "refId": "A",
               "step": 10
             }
@@ -1227,7 +1227,7 @@ data:
               "expr": "topk(5,sum(container_memory_usage_bytes{image!=\"\"}) by (pod_name))",
               "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{pod_name}}",
+              "legendFormat": "{{ "{{" }}pod_name{{ "}}" }}",
               "refId": "A",
               "step": 10
             }
@@ -1316,7 +1316,7 @@ data:
               "format": "time_series",
               "interval": "",
               "intervalFactor": 2,
-              "legendFormat": "{{ container_name }} in {{ pod_name }}",
+              "legendFormat": "{{ "{{" }} container_name {{ "}}" }} in {{ "{{" }} pod_name {{ "}}" }}",
               "metric": "container_cpu_usage_seconds_total",
               "refId": "A",
               "step": 4

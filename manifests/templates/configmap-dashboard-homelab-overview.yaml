@@ -306,7 +306,7 @@ data:
               "hide": false,
               "interval": "",
               "intervalFactor": 2,
-              "legendFormat": "{{ phase }}",
+              "legendFormat": "{{ "{{" }} phase {{ "}}" }}",
               "metric": "kube_pod_status_phase",
               "refId": "A",
               "step": 10
@@ -315,7 +315,7 @@ data:
               "expr": "kubelet_running_pod_count{kubernetes_io_role =~ \".*node.*\"}",
               "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "{{ instance }}",
+              "legendFormat": "{{ "{{" }} instance {{ "}}" }}",
               "refId": "B",
               "step": 10
             }
@@ -434,7 +434,7 @@ data:
               "format": "time_series",
               "instant": false,
               "intervalFactor": 1,
-              "legendFormat": "{{health_status}}",
+              "legendFormat": "{{ "{{" }}health_status{{ "}}" }}",
               "refId": "A"
             }
           ],
@@ -544,7 +544,7 @@ data:
               "format": "time_series",
               "instant": false,
               "intervalFactor": 1,
-              "legendFormat": "{{sync_status}}",
+              "legendFormat": "{{ "{{" }}sync_status{{ "}}" }}",
               "refId": "A"
             }
           ],

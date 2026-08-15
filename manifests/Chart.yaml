@@ -1,0 +1,5 @@
+apiVersion: v2
+name: homelab-grafana
+description: Grafana dashboards and metrics visualization
+version: 0.1.0
+appVersion: "latest"

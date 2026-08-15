@@ -12,10 +12,18 @@ spec:
     metadata:
       labels:
         app: grafana
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/dashboard-provider: {{ include (print $.Template.BasePath "/configmap-dashboard-provider.yaml") . | sha256sum }}
+        checksum/dashboard-node-exporter: {{ include (print $.Template.BasePath "/configmap-node-exporter-dashboard.yaml") . | sha256sum }}
+        checksum/dashboard-argocd: {{ include (print $.Template.BasePath "/configmap-dashboard-argocd.yaml") . | sha256sum }}
+        checksum/dashboard-cluster-resources: {{ include (print $.Template.BasePath "/configmap-dashboard-cluster-resources.yaml") . | sha256sum }}
+        checksum/dashboard-pod-resources: {{ include (print $.Template.BasePath "/configmap-dashboard-pod-resources.yaml") . | sha256sum }}
+        checksum/dashboard-homelab-overview: {{ include (print $.Template.BasePath "/configmap-dashboard-homelab-overview.yaml") . | sha256sum }}
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:latest
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 3000
           env:
