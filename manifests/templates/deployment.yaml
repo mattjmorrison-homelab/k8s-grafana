@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}@{{ .Values.image.digest }}"
           ports:
             - containerPort: 3000
           env:
