@@ -867,6 +867,290 @@ data:
           "timeFrom": "24h",
           "title": "Internet Speed",
           "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "description": "CPU busy / RAM used / Root FS used on pizero",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgba(50, 172, 45, 0.97)"
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 80
+                  },
+                  {
+                    "color": "rgba(245, 54, 54, 0.9)",
+                    "value": 90
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Temp"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "celsius"
+                  },
+                  {
+                    "id": "max",
+                    "value": 100
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "rgba(50, 172, 45, 0.97)"
+                        },
+                        {
+                          "color": "rgba(237, 129, 40, 0.89)",
+                          "value": 70
+                        },
+                        {
+                          "color": "rgba(245, 54, 54, 0.9)",
+                          "value": 80
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 0,
+            "y": 22
+          },
+          "id": 8,
+          "options": {
+            "displayMode": "gradient",
+            "minVizHeight": 10,
+            "minVizWidth": 0,
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "showUnfilled": true,
+            "valueMode": "color"
+          },
+          "pluginVersion": "11.6.1",
+          "targets": [
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "100 * (1 - avg(rate(node_cpu_seconds_total{mode=\"idle\",instance=\"pizero.local:9100\",job=\"pi-node-exporter\"}[$__rate_interval])))",
+              "instant": true,
+              "legendFormat": "CPU",
+              "range": false,
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "clamp_min((1 - (node_memory_MemAvailable_bytes{instance=\"pizero.local:9100\", job=\"pi-node-exporter\"} / node_memory_MemTotal_bytes{instance=\"pizero.local:9100\", job=\"pi-node-exporter\"})) * 100, 0)",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "RAM",
+              "range": false,
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "(\n  (node_filesystem_size_bytes{instance=\"pizero.local:9100\", job=\"pi-node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n   - node_filesystem_avail_bytes{instance=\"pizero.local:9100\", job=\"pi-node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"})\n  / node_filesystem_size_bytes{instance=\"pizero.local:9100\", job=\"pi-node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n) * 100\n",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Root FS",
+              "range": false,
+              "refId": "C",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "node_hwmon_temp_celsius{instance=\"pizero.local:9100\", job=\"pi-node-exporter\", chip=\"thermal_thermal_zone0\", sensor=\"temp1\"}",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Temp",
+              "range": false,
+              "refId": "D",
+              "step": 240
+            }
+          ],
+          "title": "pizero",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "description": "CPU busy / RAM used / Root FS used on pi1",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgba(50, 172, 45, 0.97)"
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 80
+                  },
+                  {
+                    "color": "rgba(245, 54, 54, 0.9)",
+                    "value": 90
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Temp"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "celsius"
+                  },
+                  {
+                    "id": "max",
+                    "value": 100
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "rgba(50, 172, 45, 0.97)"
+                        },
+                        {
+                          "color": "rgba(237, 129, 40, 0.89)",
+                          "value": 70
+                        },
+                        {
+                          "color": "rgba(245, 54, 54, 0.9)",
+                          "value": 80
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 12,
+            "x": 12,
+            "y": 22
+          },
+          "id": 9,
+          "options": {
+            "displayMode": "gradient",
+            "minVizHeight": 10,
+            "minVizWidth": 0,
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "showUnfilled": true,
+            "valueMode": "color"
+          },
+          "pluginVersion": "11.6.1",
+          "targets": [
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "100 * (1 - avg(rate(node_cpu_seconds_total{mode=\"idle\",instance=\"pi1.local:9100\",job=\"pi-node-exporter\"}[$__rate_interval])))",
+              "instant": true,
+              "legendFormat": "CPU",
+              "range": false,
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "clamp_min((1 - (node_memory_MemAvailable_bytes{instance=\"pi1.local:9100\", job=\"pi-node-exporter\"} / node_memory_MemTotal_bytes{instance=\"pi1.local:9100\", job=\"pi-node-exporter\"})) * 100, 0)",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "RAM",
+              "range": false,
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "(\n  (node_filesystem_size_bytes{instance=\"pi1.local:9100\", job=\"pi-node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n   - node_filesystem_avail_bytes{instance=\"pi1.local:9100\", job=\"pi-node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"})\n  / node_filesystem_size_bytes{instance=\"pi1.local:9100\", job=\"pi-node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n) * 100\n",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Root FS",
+              "range": false,
+              "refId": "C",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "node_hwmon_temp_celsius{instance=\"pi1.local:9100\", job=\"pi-node-exporter\", chip=\"thermal_thermal_zone0\", sensor=\"temp1\"}",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Temp",
+              "range": false,
+              "refId": "D",
+              "step": 240
+            }
+          ],
+          "title": "pi1",
+          "type": "bargauge"
         }
       ],
       "refresh": "30s",
