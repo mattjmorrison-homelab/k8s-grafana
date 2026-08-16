@@ -57,7 +57,43 @@ data:
               },
               "unit": "percent"
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Temp"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "celsius"
+                  },
+                  {
+                    "id": "max",
+                    "value": 100
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "rgba(50, 172, 45, 0.97)"
+                        },
+                        {
+                          "color": "rgba(237, 129, 40, 0.89)",
+                          "value": 70
+                        },
+                        {
+                          "color": "rgba(245, 54, 54, 0.9)",
+                          "value": 80
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
             "h": 6,
@@ -114,6 +150,17 @@ data:
               "range": false,
               "refId": "C",
               "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "avg(node_hwmon_temp_celsius{instance=\"imac\", job=\"node-exporter\", chip=\"platform_coretemp_0\"})",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Temp",
+              "range": false,
+              "refId": "D",
+              "step": 240
             }
           ],
           "title": "imac",
@@ -152,7 +199,43 @@ data:
               },
               "unit": "percent"
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Temp"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "celsius"
+                  },
+                  {
+                    "id": "max",
+                    "value": 100
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "rgba(50, 172, 45, 0.97)"
+                        },
+                        {
+                          "color": "rgba(237, 129, 40, 0.89)",
+                          "value": 70
+                        },
+                        {
+                          "color": "rgba(245, 54, 54, 0.9)",
+                          "value": 80
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
             "h": 6,
@@ -209,6 +292,17 @@ data:
               "range": false,
               "refId": "C",
               "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "node_hwmon_temp_celsius{instance=\"pi5-8\", job=\"node-exporter\", chip=\"thermal_thermal_zone0\", sensor=\"temp1\"}",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Temp",
+              "range": false,
+              "refId": "D",
+              "step": 240
             }
           ],
           "title": "pi5-8",
@@ -247,7 +341,43 @@ data:
               },
               "unit": "percent"
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Temp"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "celsius"
+                  },
+                  {
+                    "id": "max",
+                    "value": 100
+                  },
+                  {
+                    "id": "thresholds",
+                    "value": {
+                      "mode": "absolute",
+                      "steps": [
+                        {
+                          "color": "rgba(50, 172, 45, 0.97)"
+                        },
+                        {
+                          "color": "rgba(237, 129, 40, 0.89)",
+                          "value": 70
+                        },
+                        {
+                          "color": "rgba(245, 54, 54, 0.9)",
+                          "value": 80
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
             "h": 6,
@@ -303,6 +433,17 @@ data:
               "legendFormat": "Root FS",
               "range": false,
               "refId": "C",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "node_hwmon_temp_celsius{instance=\"pi5-16\", job=\"node-exporter\", chip=\"thermal_thermal_zone0\", sensor=\"temp1\"}",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Temp",
+              "range": false,
+              "refId": "D",
               "step": 240
             }
           ],
