@@ -27,26 +27,16 @@ data:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${ds_prometheus}"
+            "uid": "prometheus"
           },
-          "description": "Overall CPU busy percentage (averaged across all cores)",
+          "description": "CPU busy / RAM used / Root FS used on imac",
           "fieldConfig": {
             "defaults": {
               "color": {
                 "mode": "thresholds"
               },
               "decimals": 1,
-              "mappings": [
-                {
-                  "options": {
-                    "match": "null",
-                    "result": {
-                      "text": "N/A"
-                    }
-                  },
-                  "type": "special"
-                }
-              ],
+              "mappings": [],
               "max": 100,
               "min": 0,
               "thresholds": {
@@ -57,11 +47,11 @@ data:
                   },
                   {
                     "color": "rgba(237, 129, 40, 0.89)",
-                    "value": 85
+                    "value": 80
                   },
                   {
                     "color": "rgba(245, 54, 54, 0.9)",
-                    "value": 95
+                    "value": 90
                   }
                 ]
               },
@@ -77,42 +67,63 @@ data:
           },
           "id": 1,
           "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
               ],
               "fields": "",
-              "values": false
+              "values": true
             },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
+            "textMode": "auto"
           },
           "pluginVersion": "11.6.1",
           "targets": [
             {
               "editorMode": "code",
               "exemplar": false,
-              "expr": "100 * (1 - avg(rate(node_cpu_seconds_total{mode=\"idle\",instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "expr": "100 * (1 - avg(rate(node_cpu_seconds_total{mode=\"idle\",instance=\"imac\",job=\"node-exporter\"}[$__rate_interval])))",
               "instant": true,
-              "legendFormat": "",
+              "legendFormat": "CPU",
               "range": false,
               "refId": "A",
               "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "clamp_min((1 - (node_memory_MemAvailable_bytes{instance=\"imac\", job=\"node-exporter\"} / node_memory_MemTotal_bytes{instance=\"imac\", job=\"node-exporter\"})) * 100, 0)",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "RAM",
+              "range": false,
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "(\n  (node_filesystem_size_bytes{instance=\"imac\", job=\"node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n   - node_filesystem_avail_bytes{instance=\"imac\", job=\"node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"})\n  / node_filesystem_size_bytes{instance=\"imac\", job=\"node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n) * 100\n",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Root FS",
+              "range": false,
+              "refId": "C",
+              "step": 240
             }
           ],
-          "title": "CPU Busy",
-          "type": "gauge"
+          "title": "imac",
+          "type": "stat"
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${ds_prometheus}"
+            "uid": "prometheus"
           },
-          "description": "Real RAM usage excluding cache and reclaimable memory",
+          "description": "CPU busy / RAM used / Root FS used on pi5-8",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -150,59 +161,70 @@ data:
           },
           "id": 2,
           "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
               ],
               "fields": "",
-              "values": false
+              "values": true
             },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
+            "textMode": "auto"
           },
           "pluginVersion": "11.6.1",
           "targets": [
             {
               "editorMode": "code",
               "exemplar": false,
-              "expr": "clamp_min((1 - (node_memory_MemAvailable_bytes{instance=\"$node\", job=\"$job\"} / node_memory_MemTotal_bytes{instance=\"$node\", job=\"$job\"})) * 100, 0)",
+              "expr": "100 * (1 - avg(rate(node_cpu_seconds_total{mode=\"idle\",instance=\"pi5-8\",job=\"node-exporter\"}[$__rate_interval])))",
+              "instant": true,
+              "legendFormat": "CPU",
+              "range": false,
+              "refId": "A",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "clamp_min((1 - (node_memory_MemAvailable_bytes{instance=\"pi5-8\", job=\"node-exporter\"} / node_memory_MemTotal_bytes{instance=\"pi5-8\", job=\"node-exporter\"})) * 100, 0)",
               "format": "time_series",
               "instant": true,
+              "legendFormat": "RAM",
               "range": false,
               "refId": "B",
               "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "(\n  (node_filesystem_size_bytes{instance=\"pi5-8\", job=\"node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n   - node_filesystem_avail_bytes{instance=\"pi5-8\", job=\"node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"})\n  / node_filesystem_size_bytes{instance=\"pi5-8\", job=\"node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n) * 100\n",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Root FS",
+              "range": false,
+              "refId": "C",
+              "step": 240
             }
           ],
-          "title": "RAM Used",
-          "type": "gauge"
+          "title": "pi5-8",
+          "type": "stat"
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${ds_prometheus}"
+            "uid": "prometheus"
           },
-          "description": "Used Root FS",
+          "description": "CPU busy / RAM used / Root FS used on pi5-16",
           "fieldConfig": {
             "defaults": {
               "color": {
                 "mode": "thresholds"
               },
               "decimals": 1,
-              "mappings": [
-                {
-                  "options": {
-                    "match": "null",
-                    "result": {
-                      "text": "N/A"
-                    }
-                  },
-                  "type": "special"
-                }
-              ],
+              "mappings": [],
               "max": 100,
               "min": 0,
               "thresholds": {
@@ -233,35 +255,56 @@ data:
           },
           "id": 3,
           "options": {
-            "minVizHeight": 75,
-            "minVizWidth": 75,
-            "orientation": "auto",
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
             "reduceOptions": {
               "calcs": [
                 "lastNotNull"
               ],
               "fields": "",
-              "values": false
+              "values": true
             },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true,
-            "sizing": "auto"
+            "textMode": "auto"
           },
           "pluginVersion": "11.6.1",
           "targets": [
             {
               "editorMode": "code",
               "exemplar": false,
-              "expr": "(\n  (node_filesystem_size_bytes{instance=\"$node\", job=\"$job\", mountpoint=\"/\", fstype!=\"rootfs\"}\n   - node_filesystem_avail_bytes{instance=\"$node\", job=\"$job\", mountpoint=\"/\", fstype!=\"rootfs\"})\n  / node_filesystem_size_bytes{instance=\"$node\", job=\"$job\", mountpoint=\"/\", fstype!=\"rootfs\"}\n) * 100\n",
-              "format": "time_series",
+              "expr": "100 * (1 - avg(rate(node_cpu_seconds_total{mode=\"idle\",instance=\"pi5-16\",job=\"node-exporter\"}[$__rate_interval])))",
               "instant": true,
+              "legendFormat": "CPU",
               "range": false,
               "refId": "A",
               "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "clamp_min((1 - (node_memory_MemAvailable_bytes{instance=\"pi5-16\", job=\"node-exporter\"} / node_memory_MemTotal_bytes{instance=\"pi5-16\", job=\"node-exporter\"})) * 100, 0)",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "RAM",
+              "range": false,
+              "refId": "B",
+              "step": 240
+            },
+            {
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "(\n  (node_filesystem_size_bytes{instance=\"pi5-16\", job=\"node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n   - node_filesystem_avail_bytes{instance=\"pi5-16\", job=\"node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"})\n  / node_filesystem_size_bytes{instance=\"pi5-16\", job=\"node-exporter\", mountpoint=\"/\", fstype!=\"rootfs\"}\n) * 100\n",
+              "format": "time_series",
+              "instant": true,
+              "legendFormat": "Root FS",
+              "range": false,
+              "refId": "C",
+              "step": 240
             }
           ],
-          "title": "Root FS Used",
-          "type": "gauge"
+          "title": "pi5-16",
+          "type": "stat"
         },
         {
           "aliasColors": {},
