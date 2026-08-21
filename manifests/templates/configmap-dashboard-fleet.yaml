@@ -274,7 +274,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "rate(node_network_receive_bytes_total{device!=\"lo\"}[5m]) * 8",
+              "expr": "sum by (instance) (rate(node_network_receive_bytes_total{device!=\"lo\"}[5m])) * 8",
               "legendFormat": "{{ "{{" }}instance{{ "}}" }} rx",
               "range": true,
               "refId": "A"
@@ -285,7 +285,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "rate(node_network_transmit_bytes_total{device!=\"lo\"}[5m]) * 8",
+              "expr": "sum by (instance) (rate(node_network_transmit_bytes_total{device!=\"lo\"}[5m])) * 8",
               "legendFormat": "{{ "{{" }}instance{{ "}}" }} tx",
               "range": true,
               "refId": "B"
