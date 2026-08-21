@@ -27,3 +27,11 @@ data:
         type: file
         options:
           path: /etc/grafana/dashboards/homelab-overview
+      - name: woodpecker
+        type: file
+        options:
+          path: /etc/grafana/dashboards/woodpecker
+      - name: fleet
+        type: file
+        options:
+          path: /etc/grafana/dashboards/fleet
