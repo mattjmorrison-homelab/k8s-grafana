@@ -210,13 +210,13 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "100 * (1 - (node_filesystem_avail_bytes{mountpoint=\"/\"} / node_filesystem_size_bytes{mountpoint=\"/\"}))",
-              "legendFormat": "{{ "{{" }}instance{{ "}}" }}",
+              "expr": "100 * (1 - (node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\"} / node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\"}))",
+              "legendFormat": "{{ "{{" }}instance{{ "}}" }} {{ "{{" }}mountpoint{{ "}}" }}",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Disk Usage (/)",
+          "title": "Disk Usage",
           "type": "timeseries"
         },
         {
