@@ -210,7 +210,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "100 * (1 - (node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\"} / node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\"}))",
+              "expr": "100 * (1 - (node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os!=\"steamos\"} / node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os!=\"steamos\"}))",
               "legendFormat": "{{ "{{" }}instance{{ "}}" }} {{ "{{" }}mountpoint{{ "}}" }}",
               "range": true,
               "refId": "A"
