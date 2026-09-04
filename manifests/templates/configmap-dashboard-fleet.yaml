@@ -210,7 +210,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "100 * (1 - (node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os!=\"steamos\"} / node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os!=\"steamos\"}))",
+              "expr": "100 * (1 - ((node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os!=\"steamos\"} or node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os=\"steamos\",mountpoint=\"/home\"}) / (node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os!=\"steamos\"} or node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os=\"steamos\",mountpoint=\"/home\"})))",
               "legendFormat": "{{ "{{" }}instance{{ "}}" }} {{ "{{" }}mountpoint{{ "}}" }}",
               "range": true,
               "refId": "A"
@@ -292,6 +292,70 @@ data:
             }
           ],
           "title": "Network Traffic",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "description": "One line per machine reporting a CPU/package temperature sensor -- new machines appear automatically, nothing to add here",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisPlacement": "auto",
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "lineWidth": 2,
+                "pointSize": 5,
+                "showPoints": "never",
+                "spanNulls": false
+              },
+              "min": 0,
+              "unit": "celsius"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 20
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "11.6.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "max by (instance) (node_thermal_zone_temp) or max by (instance) (node_hwmon_temp_celsius > 0)",
+              "legendFormat": "{{ "{{" }}instance{{ "}}" }}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Temperature",
           "type": "timeseries"
         }
       ],
