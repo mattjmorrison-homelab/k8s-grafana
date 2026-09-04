@@ -145,7 +145,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes))",
+              "expr": "100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) or 100 * ((node_memory_active_bytes + node_memory_wired_bytes + node_memory_compressed_bytes) / node_memory_total_bytes)",
               "legendFormat": "{{ "{{" }}instance{{ "}}" }}",
               "range": true,
               "refId": "A"
@@ -210,7 +210,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "100 * (1 - ((node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os!=\"steamos\"} or node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os=\"steamos\",mountpoint=\"/home\"}) / (node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os!=\"steamos\"} or node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs\",os=\"steamos\",mountpoint=\"/home\"})))",
+              "expr": "100 * (1 - ((node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",os!=\"steamos\",job!=\"macos-node-exporter\"} or node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",os=\"steamos\",mountpoint=\"/home\"} or node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",job=\"macos-node-exporter\",mountpoint=\"/\"}) / (node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",os!=\"steamos\",job!=\"macos-node-exporter\"} or node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",os=\"steamos\",mountpoint=\"/home\"} or node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",job=\"macos-node-exporter\",mountpoint=\"/\"})))",
               "legendFormat": "{{ "{{" }}instance{{ "}}" }} {{ "{{" }}mountpoint{{ "}}" }}",
               "range": true,
               "refId": "A"
