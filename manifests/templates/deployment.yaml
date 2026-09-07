@@ -20,7 +20,6 @@ spec:
         checksum/dashboard-cluster-resources: {{ include (print $.Template.BasePath "/configmap-dashboard-cluster-resources.yaml") . | sha256sum }}
         checksum/dashboard-pod-resources: {{ include (print $.Template.BasePath "/configmap-dashboard-pod-resources.yaml") . | sha256sum }}
         checksum/dashboard-homelab-overview: {{ include (print $.Template.BasePath "/configmap-dashboard-homelab-overview.yaml") . | sha256sum }}
-        checksum/dashboard-woodpecker: {{ include (print $.Template.BasePath "/configmap-dashboard-woodpecker.yaml") . | sha256sum }}
         checksum/dashboard-fleet: {{ include (print $.Template.BasePath "/configmap-dashboard-fleet.yaml") . | sha256sum }}
     spec:
       containers:
@@ -48,8 +47,6 @@ spec:
               mountPath: /etc/grafana/dashboards/pod-resources
             - name: dashboard-homelab-overview
               mountPath: /etc/grafana/dashboards/homelab-overview
-            - name: dashboard-woodpecker
-              mountPath: /etc/grafana/dashboards/woodpecker
             - name: dashboard-fleet
               mountPath: /etc/grafana/dashboards/fleet
             - name: data
@@ -76,9 +73,6 @@ spec:
         - name: dashboard-homelab-overview
           configMap:
             name: grafana-dashboard-homelab-overview
-        - name: dashboard-woodpecker
-          configMap:
-            name: grafana-dashboard-woodpecker
         - name: dashboard-fleet
           configMap:
             name: grafana-dashboard-fleet
