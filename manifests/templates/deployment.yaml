@@ -21,6 +21,7 @@ spec:
         checksum/dashboard-pod-resources: {{ include (print $.Template.BasePath "/configmap-dashboard-pod-resources.yaml") . | sha256sum }}
         checksum/dashboard-homelab-overview: {{ include (print $.Template.BasePath "/configmap-dashboard-homelab-overview.yaml") . | sha256sum }}
         checksum/dashboard-fleet: {{ include (print $.Template.BasePath "/configmap-dashboard-fleet.yaml") . | sha256sum }}
+        checksum/dashboard-fleet-health: {{ include (print $.Template.BasePath "/configmap-dashboard-fleet-health.yaml") . | sha256sum }}
     spec:
       containers:
         - name: grafana
@@ -32,6 +33,8 @@ spec:
               value: admin
             - name: GF_SECURITY_ADMIN_PASSWORD
               value: admin
+            - name: GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH
+              value: /etc/grafana/dashboards/fleet-health/fleet-health.json
           volumeMounts:
             - name: datasources
               mountPath: /etc/grafana/provisioning/datasources
@@ -49,6 +52,8 @@ spec:
               mountPath: /etc/grafana/dashboards/homelab-overview
             - name: dashboard-fleet
               mountPath: /etc/grafana/dashboards/fleet
+            - name: dashboard-fleet-health
+              mountPath: /etc/grafana/dashboards/fleet-health
             - name: data
               mountPath: /var/lib/grafana
       volumes:
@@ -76,6 +81,9 @@ spec:
         - name: dashboard-fleet
           configMap:
             name: grafana-dashboard-fleet
+        - name: dashboard-fleet-health
+          configMap:
+            name: grafana-dashboard-fleet-health
         - name: data
           persistentVolumeClaim:
             claimName: grafana-data
