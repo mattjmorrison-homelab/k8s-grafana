@@ -363,6 +363,14 @@ data:
           "title": "Fleet Health",
           "transformations": [
             {
+              "id": "filterFieldsByName",
+              "options": {
+                "include": {
+                  "pattern": "^(instance|Value.*)$"
+                }
+              }
+            },
+            {
               "id": "joinByField",
               "options": {
                 "byField": "instance",
@@ -376,6 +384,13 @@ data:
                 "indexByName": {},
                 "renameByName": {
                   "instance": "Host",
+                  "Value 1": "CPU %",
+                  "Value 2": "Memory %",
+                  "Value 3": "Disk %",
+                  "Value 4": "Temp °C",
+                  "Value 5": "Network RX (bps)",
+                  "Value 6": "Network TX (bps)",
+                  "Value 7": "Uptime (s)",
                   "Value #A": "CPU %",
                   "Value #B": "Memory %",
                   "Value #C": "Disk %",
