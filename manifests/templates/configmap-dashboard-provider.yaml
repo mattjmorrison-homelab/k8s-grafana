@@ -31,3 +31,7 @@ data:
         type: file
         options:
           path: /etc/grafana/dashboards/fleet
+      - name: fleet-health
+        type: file
+        options:
+          path: /etc/grafana/dashboards/fleet-health
