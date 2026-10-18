@@ -282,6 +282,7 @@ data:
               },
               "editorMode": "code",
               "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+              "format": "table",
               "instant": true,
               "range": false,
               "refId": "A"
@@ -293,6 +294,7 @@ data:
               },
               "editorMode": "code",
               "expr": "100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) or 100 * ((node_memory_active_bytes + node_memory_wired_bytes + node_memory_compressed_bytes) / node_memory_total_bytes)",
+              "format": "table",
               "instant": true,
               "range": false,
               "refId": "B"
@@ -304,6 +306,7 @@ data:
               },
               "editorMode": "code",
               "expr": "100 * (1 - ((node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",os!=\"steamos\",job!=\"macos-node-exporter\"} or node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",os=\"steamos\",mountpoint=\"/home\"} or node_filesystem_avail_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",job=\"macos-node-exporter\",mountpoint=\"/\"}) / (node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",os!=\"steamos\",job!=\"macos-node-exporter\"} or node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",os=\"steamos\",mountpoint=\"/home\"} or node_filesystem_size_bytes{fstype!~\"tmpfs|overlay|efivarfs|devtmpfs|autofs\",job=\"macos-node-exporter\",mountpoint=\"/\"})))",
+              "format": "table",
               "instant": true,
               "range": false,
               "refId": "C"
@@ -315,6 +318,7 @@ data:
               },
               "editorMode": "code",
               "expr": "max by (instance) (node_thermal_zone_temp) or max by (instance) (node_hwmon_temp_celsius > 0)",
+              "format": "table",
               "instant": true,
               "range": false,
               "refId": "D"
@@ -326,6 +330,7 @@ data:
               },
               "editorMode": "code",
               "expr": "sum by (instance) (rate(node_network_receive_bytes_total{device!=\"lo\"}[5m])) * 8",
+              "format": "table",
               "instant": true,
               "range": false,
               "refId": "E"
@@ -337,6 +342,7 @@ data:
               },
               "editorMode": "code",
               "expr": "sum by (instance) (rate(node_network_transmit_bytes_total{device!=\"lo\"}[5m])) * 8",
+              "format": "table",
               "instant": true,
               "range": false,
               "refId": "F"
@@ -348,6 +354,7 @@ data:
               },
               "editorMode": "code",
               "expr": "time() - node_boot_time_seconds",
+              "format": "table",
               "instant": true,
               "range": false,
               "refId": "G"
